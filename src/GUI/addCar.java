@@ -4,6 +4,12 @@
  */
 package GUI;
 
+import Model.MySQL;
+import java.sql.ResultSet;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author charuka umesh
@@ -15,6 +21,47 @@ public class addCar extends javax.swing.JFrame {
      */
     public addCar() {
         initComponents();
+        loadcars();
+    }
+    
+    private void clean() {
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jTextField6.setText("");
+        jTextField7.setText("");
+        jTextField8.setText("");
+        jTextField1.requestFocus();
+    }
+
+
+            private void loadcars() {
+        try {
+
+            ResultSet rs = MySQL.execute("SELECT * FROM `cars`");
+
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+
+             while (rs.next()) {
+                Vector<String> v = new Vector();
+                v.add(rs.getString("id"));
+                v.add(rs.getString("make"));
+                v.add(rs.getString("model"));
+                v.add(rs.getString("year"));
+                v.add(rs.getString("color"));
+                v.add(rs.getString("fuelType"));
+                v.add(rs.getString("price"));
+                model.addRow(v);
+                jTable1.setModel(model);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -105,17 +152,17 @@ public class addCar extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id", "Make", "Model", "Year", "ChassisNumber", "Color", "FuelType", "Price"
+                "Id", "Make", "Model", "Year", "Color", "FuelType", "Price"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -124,19 +171,26 @@ public class addCar extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(1);
             jTable1.getColumnModel().getColumn(1).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(4);
             jTable1.getColumnModel().getColumn(2).setResizable(false);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(4);
             jTable1.getColumnModel().getColumn(3).setResizable(false);
+            jTable1.getColumnModel().getColumn(3).setPreferredWidth(2);
+            jTable1.getColumnModel().getColumn(4).setResizable(false);
+            jTable1.getColumnModel().getColumn(4).setPreferredWidth(3);
             jTable1.getColumnModel().getColumn(5).setResizable(false);
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(3);
             jTable1.getColumnModel().getColumn(6).setResizable(false);
+            jTable1.getColumnModel().getColumn(6).setPreferredWidth(10);
         }
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("Chassis Number");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel8.setText("Color");
+        jLabel8.setText("Mileage");
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel9.setText("Price");
@@ -157,23 +211,23 @@ public class addCar extends javax.swing.JFrame {
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(111, 111, 111)
+                .addGap(63, 63, 63)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
                 .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
@@ -235,6 +289,51 @@ public class addCar extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        
+        String make = jTextField1.getText();
+        String model = jTextField2.getText();
+        String year = jTextField3.getText();
+        String color = jTextField4.getText();
+        String chassisNumber = jTextField5.getText();
+        String mileage = jTextField6.getText();
+        String fuelType = jTextField7.getText();
+        String price = jTextField8.getText();
+        
+        if (make.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Car Make Name", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (model.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Car Model Name", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (year.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Car Year", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (color.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Color", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (chassisNumber.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter chassis Number", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (mileage.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter mileage", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (fuelType.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Fuel Type", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (price.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Car Price", "Error!", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+
+        try {
+                MySQL.execute("INSERT INTO `cars`(`make`, `model`, `year`,`color`,`chassisNumber`,`mileage`,`fuelType`,`price`)"
+                        + " VALUES('" + make + "','" + model + "','" + year + "','" + color + "','" + chassisNumber + "','" + mileage + "','" + fuelType + "','" + price + "')");
+
+                clean();
+                // stmt.executeUpdate(query);
+                JOptionPane.showMessageDialog(this, "Save successfully");
+                loadcars();
+
+            } catch (Exception e) {
+
+                System.out.println(e);
+            }
+        
+        
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

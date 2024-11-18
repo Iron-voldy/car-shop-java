@@ -20,7 +20,7 @@ public class MySQL {
     static {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/assigment_1", "root", "20020224Ha");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/car_shop", "root", "12345678");
             // Statement stmt = con.createStatement();
         } catch (Exception e) {
         }

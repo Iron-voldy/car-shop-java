@@ -4,6 +4,12 @@
  */
 package GUI;
 
+import Model.MySQL;
+import java.sql.ResultSet;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author charuka umesh
@@ -15,7 +21,44 @@ public class addCustomer extends javax.swing.JFrame {
      */
     public addCustomer() {
         initComponents();
+        loadusers();
     }
+    
+        private void clean() {
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextArea1.setText("");
+        jTextField1.requestFocus();
+    }
+        
+        private void loadusers() {
+        try {
+
+            ResultSet rs = MySQL.execute("SELECT * FROM `customers`");
+
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+
+             while (rs.next()) {
+                Vector<String> v = new Vector();
+                v.add(rs.getString("id"));
+                v.add(rs.getString("fname"));
+                v.add(rs.getString("lname"));
+                v.add(rs.getString("mobile"));
+                v.add(rs.getString("email"));
+                v.add(rs.getString("address"));
+                model.addRow(v);
+                jTable1.setModel(model);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -93,6 +136,11 @@ public class addCustomer extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setText("Add Customer");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton2.setText("Clear");
@@ -195,6 +243,47 @@ public class addCustomer extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        String fname = jTextField1.getText();
+        String lname = jTextField2.getText();
+        String mobile = jTextField3.getText();
+        String email = jTextField4.getText();
+        String address = jTextArea1.getText();
+        
+        if (fname.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter First Name", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (lname.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Last Name", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (mobile.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Mobile Number", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Email", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (address.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Address", "Error!", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+
+        try {
+                MySQL.execute("INSERT INTO `customers`(`fname`, `lname`, `mobile`,`email`,`address`)"
+                        + " VALUES('" + fname + "','" + lname + "','" + mobile + "','" + email + "','" + address + "')");
+
+                clean();
+                // stmt.executeUpdate(query);
+                JOptionPane.showMessageDialog(this, "Save successfully");
+                loadusers();
+
+            } catch (Exception e) {
+
+                System.out.println(e);
+            }
+        
+        
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

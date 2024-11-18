@@ -117,7 +117,7 @@ public class main extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         
-        this.dispose();
+        //this.dispose();
         addCustomer addcus = new addCustomer();
         addcus.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -125,6 +125,7 @@ public class main extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         addCar addcr = new addCar();
+        addcr.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
